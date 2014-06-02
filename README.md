@@ -9,5 +9,6 @@ dotfiles
 ``` bash  
 $ git clone https://github.com/hakopako/dotfiles  
 $ cd dotfiles
-$ sh setup.sh
+$ sh setup.sh -d   # dry-run モード
+$ sh setup.sh -r
 ```
