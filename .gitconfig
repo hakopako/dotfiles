@@ -1,0 +1,11 @@
+[user]
+    name = NAME
+    email = EMAIL
+[alias]
+    co = checkout
+    st = status
+    ci = commit -a
+    di = diff
+    br = branch
+[color]
+    ui = true
