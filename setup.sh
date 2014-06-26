@@ -14,8 +14,10 @@ done
 if [ "$FLAG_D" = "TRUE" ]; then
 	for FILE in ${DIRPATH}/\.[a-z]*
 	do
-		if [ ${FILE##*/} != ".git" ]; then
-			echo "${FILE##*/} -> ${HOME}/${FILE##*/}"
+		DOTFILENAME=`echo ${FILE##*/} | sed -e "s/\.[^.]*$//g"`
+		if [ ${FILE##*/} != ".git" ] && [ ${FILE##*/} != ".gitignore" ] && [ -n "${DOTFILENAME}" ]; then
+			echo "cp ${FILE##*/} -> ${DOTFILENAME}"
+			echo "ln ${DOTFILENAME} -> ${HOME}/${DOTFILENAME}"
 		fi
 	done
 	exit 0
@@ -24,9 +26,12 @@ fi
 if [ "$FLAG_R" = "TRUE" ]; then
 	for FILE in ${DIRPATH}/\.[a-z]*
 	do
-		if [ ${FILE##*/} != ".git" ]; then
-			ln -sf ${FILE} ${HOME}/${FILE##*/}
-			echo "Success: ${FILE##*/} -> ${HOME}/${FILE##*/}"
+		DOTFILENAME=`echo ${FILE##*/} | sed -e "s/\.[^.]*$//g"`	
+		if [ ${FILE##*/} != ".git" ] && [ ${FILE##*/} != ".gitignore" ] && [ -n "${DOTFILENAME}" ]; then
+			cp ${FILE##*/} ${DOTFILENAME}
+			echo "Success: cp ${FILE##*/} -> ${DOTFILENAME}"
+			ln -sf $DIRPATH/$DOTFILENAME ${HOME}/${DOTFILENAME}
+			echo "Success: ln ${DOTFILENAME} -> ${HOME}/${DOTFILENAME}"
 		fi
 	done
 	exit 0
