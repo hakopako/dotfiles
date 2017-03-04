@@ -6,17 +6,43 @@ set showmatch "括弧入力時の対応する括弧を表示
 syntax on "コードの色分け
 set tabstop=4 "インデントをスペース4つ分に設定
 set smartindent "オートインデント
+set wildmenu " コマンドラインモードで<Tab>キーによるファイル名補完を有効にする
+set number "行数を表示
+set whichwrap=b,s,h,l,<,>,[,] " カーソルを行頭、行末で止まらないようにする
+"set statusline+=%{fugitive#statusline()} " ステータス行に現在のgitブランチを表示する
+let NERDTreeShowHidden=1
+""""""""""""""""""""""""""""""
+" 最後のカーソル位置を復元する
+""""""""""""""""""""""""""""""
+if has("autocmd")
+    autocmd BufReadPost *
+    \ if line("'\"") > 0 && line ("'\"") <= line("$") |
+    \   exe "normal! g'\"" |
+    \ endif
+endif
+""""""""""""""""""""""""""""""
 "#####検索設定#####
 set ignorecase "大文字/小文字の区別なく検索する
 set smartcase "検索文字列に大文字が含まれている場合は区別して検索する
 set wrapscan "検索時に最後まで行ったら最初に戻る
- 
- "#####カーソル移動#####
- nnoremap <Space>h <Home>
- nnoremap <Space>l <End>
- inoremap <Space>h <Home>
- inoremap <Space>l <End>
- inoremap <C-h> <Left>
- inoremap <C-j> <Down>
- inoremap <C-k> <Up>
- inoremap <C-l> <Right>
+"#####key-bind#####
+map <C-r> :NERDTreeToggle<CR>
+imap { {}<LEFT>
+imap [ []<LEFT>
+imap ( ()<LEFT>
+ino jj <esc>
+cno jj <c-c>
+"#####dein#########
+if &compatible
+  set nocompatible
+endif
+set runtimepath+=~/.vim/dein/repos/github.com/Shougo/dein.vim
+
+call dein#begin(expand('~/.vim/dein'))
+call dein#add('Shougo/dein.vim')
+call dein#add('scrooloose/nerdtree')
+call dein#add('tpope/vim-endwise')
+call dein#add('nathanaelkane/vim-indent-guides')
+call dein#add('vim-scripts/AnsiEsc.vim')
+call dein#add('altercation/vim-colors-solarized')
+call dein#end()

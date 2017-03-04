@@ -1,11 +1,9 @@
 [user]
-    name = NAME
-    email = EMAIL
+    name = hakopako
+    email = hakohakohako.0518@gmail.com
 [alias]
     co = checkout
     st = status
-    ci = commit -a
-    di = diff
     br = branch
 [color]
     ui = true
